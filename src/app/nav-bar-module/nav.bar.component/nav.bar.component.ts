@@ -1,5 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginData} from '../../login.module/LoginData';
+import {HttpClient} from '@angular/common/http';
+
+//TODO
+/*
+fix preloader
+ */
 
 @Component({
   selector: 'app-navbar',
@@ -54,12 +60,15 @@ import {LoginData} from '../../login.module/LoginData';
                    <a class="nav-link" routerLink="/content" routerLinkActive="active">Content</a>
                  </li>
                </div>
-               
+
                <li class="nav-item ">
-                 <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+                 <a class="nav-link" routerLink="/signUp" routerLinkActive="active" [hidden]="userInfo !=null">SignUp</a>
+               </li>
+               <li class="nav-item ">
+                 <a class="nav-link" routerLink="/login" routerLinkActive="active" [hidden]="userInfo !=null">Login</a>
                </li>
                <li class="nav-item">
-                 <a class="nav-link" href="#">Logout</a>
+                 <button class="btn btn-primary" (click)="logOut()" [hidden]="userInfo ==null">Logout</button>
                </li>
              </ul>
            </div>
@@ -74,6 +83,9 @@ import {LoginData} from '../../login.module/LoginData';
   styleUrls: ['nav.bar.component.css']
 })
 export class NavBarComponent implements OnInit {
+  constructor(private http: HttpClient) {
+  }
+
   userInfo: LoginData;
   isHidden: boolean = false;
 
@@ -83,12 +95,19 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {
     let userInfoText = localStorage.getItem('currentUser');
-    this.userInfo = JSON.parse(userInfoText);
+    if (userInfoText != null) {
+      this.userInfo = JSON.parse(userInfoText);
+    }
     console.log('currentUser is' + this.userInfo);
   }
 
   logOut() {
     localStorage.clear();
     window.location.reload();
+    this.http.post('http://localhost:9090/logOut', null).subscribe(value => {
+      console.log('Logout');
+    },error1 => {
+      console.log('error logOut' + error1);
+    });
   }
 }

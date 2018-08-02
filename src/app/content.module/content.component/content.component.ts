@@ -1,23 +1,22 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ElementData} from '../ElementData';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Observable} from 'rxjs';
-import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'app-content',
-  template: `
+  template: `    
     <div class="container">
-      <div>
-        <input type="text" name="search" placeholder="Search.." #input [(ngModel)]="this.inputValue">
-        <button (click)="filterBoxes(input.value)">Search</button>
+      <div class="row input-form">
+        <div class="col-sm-6">
+          <div class="input-group">
+              <input type="text" class="form-control"  placeholder="Search"   #input  (input)="onSearchChange($event.target.value)">
+              <button class="btn btn-outline-success" (click)="filterBoxes(input.value)">Search</button>
+          </div>
+        </div>
       </div>
-      // TODO
-      <ul>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
+
+      <ul *ngFor="let item of searchedItems">
+        <li>{{item}}</li>
       </ul>
       
       <div class="row">
@@ -28,9 +27,6 @@ import {FormControl} from '@angular/forms';
       </div>
       <div >
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      </div>
-      <div>
-        {{inputValue}}
       </div>
       <div>
         {{userInfo}}
@@ -44,14 +40,23 @@ export class ContentComponent implements OnInit{
   constructor(private router: Router, private activeRouter: ActivatedRoute) {
   }
 
-  inputValue: string;
   boxes: Array<ElementData> = [];
   paramId: string;
   p: number = 1;
   userInfo: string;
+  searchedItems: Array<string> = [];
+  allItems: Array<string> = [];
 
   navigateToElementInfo(id: number) {
     this.router.navigate(['content/'+id]);
+  }
+
+  onSearchChange(searchValue : string ) {
+    if (searchValue.length > 0) {
+      this.searchedItems = this.allItems.filter(value => value.startsWith(searchValue));
+    } else {
+      this.searchedItems = null;
+    }
   }
 
   ngOnInit(): void {
@@ -63,6 +68,12 @@ export class ContentComponent implements OnInit{
     }
 
     this.userInfo = localStorage.getItem('currentUser');
+    this.allItems.push('A');
+    this.allItems.push('AA');
+    this.allItems.push('AAA');
+    this.allItems.push('B');
+    this.allItems.push('BB');
+    this.allItems.push('BBB');
   }
 
   filterBoxes(value: number) {

@@ -24,7 +24,7 @@ import {LoginData} from '../LoginData';
                   : profileForm.get('password').valid && profileForm.get('password').touched ? 'green solid' : 'aqua solid'}"/>
         </div>
       </label>
-      <button class="btn btn-primary btn-block" type="submit" [disabled]="!profileForm.valid">Submit</button> 
+      <button class="btn btn-outline-success btn-block " type="submit" [disabled]="!profileForm.valid">Submit</button> 
     </form>
     
     <div class="loader" [hidden]="!showSpinner">

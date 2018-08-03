@@ -7,25 +7,27 @@ import {LoginData} from '../LoginData';
 @Component({
   selector: 'app-login-form',
   template: `    
-    <form class="form-signin" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-      <label>
-        Login:
-        <div>
-        <input type="text" formControlName="login"
-               [ngStyle]="{ 'border-bottom': profileForm.get('login').invalid && profileForm.get('login').touched ? 'red solid'
+    <div class="main-login main-center">
+      <form class="form-signin" [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <label>
+          Login:
+          <div>
+            <input type="text" formControlName="login"
+                   [ngStyle]="{ 'border-bottom': profileForm.get('login').invalid && profileForm.get('login').touched ? 'red solid'
                   : profileForm.get('login').valid && profileForm.get('login').touched ? 'green solid' : 'aqua solid'}"/>
-        </div>
-      </label>
-      <label>
-        Password:
-        <div>
-          <input type="password" formControlName="password"
-                 [ngStyle]="{ 'border-bottom': profileForm.get('password').invalid && profileForm.get('password').touched ? 'red solid'
+          </div>
+        </label>
+        <label>
+          Password:
+          <div>
+            <input type="password" formControlName="password"
+                   [ngStyle]="{ 'border-bottom': profileForm.get('password').invalid && profileForm.get('password').touched ? 'red solid'
                   : profileForm.get('password').valid && profileForm.get('password').touched ? 'green solid' : 'aqua solid'}"/>
-        </div>
-      </label>
-      <button class="btn btn-outline-success btn-block " type="submit" [disabled]="!profileForm.valid">Submit</button> 
-    </form>
+          </div>
+        </label>
+        <button class="btn btn-outline-success btn-block " type="submit" [disabled]="!profileForm.valid">Submit</button>
+      </form>
+    </div>
     
     <div class="loader" [hidden]="!showSpinner">
       <div class="loader-inner">

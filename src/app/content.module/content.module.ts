@@ -6,16 +6,18 @@ import {ContentInfoComponent} from './content.info.component/content.info.compon
 import {NgxPaginationModule} from 'ngx-pagination';
 import {SignUpComponent} from './signUp.component/signUp.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import {SignUpEmailConfirmationComponent} from './email.confirmation.component/signUpEmailConfirmation.component';
 
 @NgModule({
   declarations: [
-    ContentComponent, ContentInfoComponent, SignUpComponent
+    ContentComponent, ContentInfoComponent, SignUpComponent, SignUpEmailConfirmationComponent
   ],
   imports: [
-    CommonModule, RouterModule, NgxPaginationModule, FormsModule, ReactiveFormsModule
+    CommonModule, RouterModule, NgxPaginationModule, FormsModule, ReactiveFormsModule, HttpClientModule
   ],
   exports: [
-    ContentComponent, ContentInfoComponent, SignUpComponent
+    ContentComponent, ContentInfoComponent, SignUpComponent, SignUpEmailConfirmationComponent
   ],
   providers: [
   ]

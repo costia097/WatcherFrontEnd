@@ -8,16 +8,17 @@ import {SignUpComponent} from './signUp.component/signUp.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {SignUpEmailConfirmationComponent} from './email.confirmation.component/signUpEmailConfirmation.component';
+import {SignUpConfirmationComponent} from './signUp.confirmation.component/signUp.confirmation.component';
 
 @NgModule({
   declarations: [
-    ContentComponent, ContentInfoComponent, SignUpComponent, SignUpEmailConfirmationComponent
+    ContentComponent, ContentInfoComponent, SignUpComponent, SignUpEmailConfirmationComponent, SignUpConfirmationComponent
   ],
   imports: [
     CommonModule, RouterModule, NgxPaginationModule, FormsModule, ReactiveFormsModule, HttpClientModule
   ],
   exports: [
-    ContentComponent, ContentInfoComponent, SignUpComponent, SignUpEmailConfirmationComponent
+    ContentComponent, ContentInfoComponent, SignUpComponent, SignUpEmailConfirmationComponent, SignUpConfirmationComponent
   ],
   providers: [
   ]

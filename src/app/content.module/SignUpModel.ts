@@ -6,6 +6,8 @@ export class SignUpModel {
   private _password: string;
   private _gender: string;
   private _dateOfBirth: string;
+  private _country: string;
+  private _address: string;
 
 
   get firstName(): string {
@@ -62,5 +64,21 @@ export class SignUpModel {
 
   set dateOfBirth(value: string) {
     this._dateOfBirth = value;
+  }
+
+  get country(): string {
+    return this._country;
+  }
+
+  set country(value: string) {
+    this._country = value;
+  }
+
+  get address(): string {
+    return this._address;
+  }
+
+  set address(value: string) {
+    this._address = value;
   }
 }

@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {SignUpModel} from '../SignUpModel';
 import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -82,7 +83,7 @@ import {HttpClient} from '@angular/common/http';
           <div class="cols-sm-10">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-              <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Password"
+              <input type="password" class="form-control" name="confirm" placeholder="Confirm your Password"
                      formControlName="confirmPassword"
                      [ngStyle]="{ 'border-bottom': signUpForm.get('confirmPassword').invalid && signUpForm.get('confirmPassword').touched ? 'red solid'
                   : signUpForm.get('confirmPassword').valid && signUpForm.get('confirmPassword').touched ? 'green solid' : 'aqua solid'}"/>
@@ -100,7 +101,7 @@ import {HttpClient} from '@angular/common/http';
           <div class="cols-sm-10">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-              <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Country"
+              <input type="password" class="form-control" name="confirm"  placeholder="Country"
                      formControlName="country"
                      [ngStyle]="{ 'border-bottom': signUpForm.get('country').invalid && signUpForm.get('country').touched ? 'red solid'
                   : signUpForm.get('country').valid && signUpForm.get('country').touched ? 'green solid' : 'aqua solid'}"/>
@@ -113,7 +114,7 @@ import {HttpClient} from '@angular/common/http';
           <div class="cols-sm-10">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-              <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Address"
+              <input type="password" class="form-control" name="confirm"  placeholder="Address"
                      formControlName="address"
                      [ngStyle]="{ 'border-bottom': signUpForm.get('address').invalid && signUpForm.get('address').touched ? 'red solid'
                   : signUpForm.get('address').valid && signUpForm.get('address').touched ? 'green solid' : 'aqua solid'}"/>
@@ -133,15 +134,11 @@ import {HttpClient} from '@angular/common/http';
         </div>
       </form>
     </div>
-
-    {{signUpForm.valid}}
-    {{signUpForm.get('firstName').value}}
-
   `,
   styleUrls: ['signUp.component.css']
 })
 export class SignUpComponent {
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
   }
 
   signUpForm = this.fb.group({
@@ -154,7 +151,7 @@ export class SignUpComponent {
     gender: ['', Validators.required],
     agree: [false, [Validators.required, Validators.requiredTrue]],
     dateOfBirth: ['', [Validators.required]],
-    country:[''],
+    country:['',Validators.required],
     address: ['']
   });
 
@@ -175,10 +172,13 @@ export class SignUpComponent {
     signUpModel.password = this.signUpForm.get('password').value;
     signUpModel.gender =  this.signUpForm.get('gender').value;
     signUpModel.dateOfBirth = this.signUpForm.get('dateOfBirth').value;
-    console.log('Submitted' + signUpModel.dateOfBirth);
-    console.log('Submitted' + signUpModel.gender);
+    signUpModel.country = this.signUpForm.get('country').value;
+    signUpModel.address = this.signUpForm.get('address').value;
     this.http.post('http://localhost:9090/signUp', signUpModel).subscribe(value => {
       console.log('SignUp OK ');
+      this.router.navigate(['/signUp/send'],{
+        queryParams: {email: this.signUpForm.get('email').value}
+      });
     },error1 => {
       console.log('Error while signUp ' + error1.toString());
     });

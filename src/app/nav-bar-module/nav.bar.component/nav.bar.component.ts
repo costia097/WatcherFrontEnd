@@ -67,6 +67,7 @@ fix preloader
                <li class="nav-item ">
                  <a class="nav-link" routerLink="/login" routerLinkActive="active" [hidden]="userInfo !=null">Login</a>
                </li>
+
                <li class="nav-item">
                  <button class="btn btn-primary" (click)="logOut()" [hidden]="userInfo ==null">Logout</button>
                </li>
@@ -74,6 +75,12 @@ fix preloader
            </div>
          </div>
        </nav>
+       <div *ngIf="userInfo !=null">
+         Hello,
+         <h4>
+           {{userInfo.userName}}
+         </h4>
+       </div>
 
        <router-outlet></router-outlet>
      </div>

@@ -9,13 +9,15 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {SignUpEmailConfirmationComponent} from './email.confirmation.component/signUpEmailConfirmation.component';
 import {SignUpConfirmationComponent} from './signUp.confirmation.component/signUp.confirmation.component';
+import {PreloaderComponent} from '../login.module/preloader.component/preloader.component';
+import {LoginModule} from '../login.module/login.module';
 
 @NgModule({
   declarations: [
     ContentComponent, ContentInfoComponent, SignUpComponent, SignUpEmailConfirmationComponent, SignUpConfirmationComponent
   ],
   imports: [
-    CommonModule, RouterModule, NgxPaginationModule, FormsModule, ReactiveFormsModule, HttpClientModule
+    CommonModule, RouterModule, NgxPaginationModule, FormsModule, ReactiveFormsModule, HttpClientModule, LoginModule
   ],
   exports: [
     ContentComponent, ContentInfoComponent, SignUpComponent, SignUpEmailConfirmationComponent, SignUpConfirmationComponent

@@ -5,16 +5,18 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
+import {PreloaderComponent} from './preloader.component/preloader.component';
 
 @NgModule({
-  declarations:[
-    LoginFormComponent
+  declarations: [
+    LoginFormComponent, PreloaderComponent
   ],
   imports: [
     CommonModule, FormsModule, BrowserModule, ReactiveFormsModule, HttpClientModule, RouterModule
   ],
   exports: [
-    LoginFormComponent
+    LoginFormComponent,
+    PreloaderComponent
   ]
 })
 export class LoginModule {

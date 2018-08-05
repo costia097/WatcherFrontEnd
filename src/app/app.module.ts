@@ -15,6 +15,8 @@ import {NavBarRoutingModule} from './nav-bar-module/nav.bar.routing.module';
   imports: [
     BrowserModule, NavBarModule, ContentModule, LoginModule, AppRoutingModule, NavBarRoutingModule
   ],
+  exports: [
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

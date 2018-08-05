@@ -3,6 +3,8 @@ import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import {SignUpModel} from '../SignUpModel';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {CacheService} from '../../services/CacheService';
+import {EmailsLoginResponse} from '../../services/EmailsLoginResponse';
 
 
 @Component({
@@ -41,6 +43,9 @@ import {Router} from '@angular/router';
         <br/>
         <br/>
 
+        <div *ngIf="this.signUpForm.get('email').invalid && emailAlreadyUse" class="alert alert-danger">
+          <strong>Danger!</strong> emailAlreadyUse.
+        </div>
         <div class="form-group">
           <label for="email" class="cols-sm-2 control-label">Your Email</label>
           <div class="cols-sm-10">
@@ -53,6 +58,9 @@ import {Router} from '@angular/router';
           </div>
         </div>
 
+        <div *ngIf="this.signUpForm.get('login').invalid && loginAlreadyUse" class="alert alert-danger">
+          <strong>Danger!</strong> loginAlreadyUse.
+        </div>
         <div class="form-group">
           <label for="username" class="cols-sm-2 control-label">Login</label>
           <div class="cols-sm-10">
@@ -134,24 +142,32 @@ import {Router} from '@angular/router';
         </div>
       </form>
     </div>
+    
+    <app-preloader [showSpinner]="showSpinner"></app-preloader>
   `,
-  styleUrls: ['signUp.component.css']
+  styleUrls: ['signUp.component.css'],
+  providers: [CacheService]
 })
 export class SignUpComponent {
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private cache: CacheService) {
   }
+
+  showSpinner: boolean = false;
+  emailAlreadyUse: boolean = false;
+  loginAlreadyUse: boolean = false;
+  allData: EmailsLoginResponse = new EmailsLoginResponse();
 
   signUpForm = this.fb.group({
     firstName: ['', [Validators.required, Validators.minLength(3)]],
     lastName: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    login: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email, this.emailUniqueValidator.bind(this)]],
+    login: ['', [Validators.required, this.loginUniqueValidator.bind(this)]],
     password: ['', Validators.required],
     confirmPassword: ['', [Validators.required, this.passwordEqualsValidator]],
     gender: ['', Validators.required],
     agree: [false, [Validators.required, Validators.requiredTrue]],
     dateOfBirth: ['', [Validators.required]],
-    country:['',Validators.required],
+    country: ['', Validators.required],
     address: ['']
   });
 
@@ -162,6 +178,49 @@ export class SignUpComponent {
     }
     return null;
   }
+
+
+  emailUniqueValidator(control: FormControl): { [key: string]: boolean } | null {
+    this.emailAlreadyUse = false;
+    let email = control.root.get('email');
+    this.getAllLogins();
+    if (email != null && email.value != null && !(email.value.toString() == '')) {
+      let emailValue = email.value;
+      // @ts-ignore
+      if (this.allData._allEmails.includes(emailValue)) {
+        this.emailAlreadyUse = true;
+        return {'error': true};
+        // @ts-ignore
+      }
+    }
+    return null;
+  }
+
+  loginUniqueValidator(control: FormControl): { [key: string]: boolean } | null {
+    this.loginAlreadyUse = false;
+    let login = control.root.get('login');
+    this.getAllLogins();
+    if (login != null && login.value != null && !(login.value.toString() == '')) {
+      let loginValue = login.value;
+      // @ts-ignore
+      if (this.allData._allLogins.includes(loginValue)) {
+        this.loginAlreadyUse = true;
+        return {'error': true};
+      }
+    }
+    return null;
+  }
+
+
+
+
+  public getAllLogins() {
+    let allDataTemp = localStorage.getItem('allData');
+    if (allDataTemp != null) {
+      this.allData = JSON.parse(allDataTemp);
+    }
+  }
+
 
   onSubmit() {
     let signUpModel: SignUpModel = new SignUpModel();
@@ -174,12 +233,15 @@ export class SignUpComponent {
     signUpModel.dateOfBirth = this.signUpForm.get('dateOfBirth').value;
     signUpModel.country = this.signUpForm.get('country').value;
     signUpModel.address = this.signUpForm.get('address').value;
+    this.showSpinner = true;
     this.http.post('http://localhost:9090/signUp', signUpModel).subscribe(value => {
+      this.showSpinner = false;
       console.log('SignUp OK ');
       this.router.navigate(['/signUp/send'],{
         queryParams: {email: this.signUpForm.get('email').value}
       });
     },error1 => {
+      this.showSpinner = false;
       console.log('Error while signUp ' + error1.toString());
     });
   }

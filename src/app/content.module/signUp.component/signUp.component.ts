@@ -211,8 +211,18 @@ export class SignUpComponent {
     return null;
   }
 
-
-
+  public refreshCache(newLogin: string, newEmail: string) {
+    let allDataTemp = localStorage.getItem('allData');
+    let allDataTempObj: EmailsLoginResponse;
+    if (allDataTemp != null) {
+      allDataTempObj = JSON.parse(allDataTemp);
+      // @ts-ignore
+      allDataTempObj._allLogins.push(newLogin);
+      // @ts-ignore
+      allDataTempObj._allEmails.push(newEmail);
+      localStorage.setItem('allData', JSON.stringify(allDataTempObj));
+    }
+  }
 
   public getAllLogins() {
     let allDataTemp = localStorage.getItem('allData');
@@ -234,6 +244,7 @@ export class SignUpComponent {
     signUpModel.country = this.signUpForm.get('country').value;
     signUpModel.address = this.signUpForm.get('address').value;
     this.showSpinner = true;
+    this.refreshCache(signUpModel.login, signUpModel.email);
     this.http.post('http://localhost:9090/signUp', signUpModel).subscribe(value => {
       this.showSpinner = false;
       console.log('SignUp OK ');

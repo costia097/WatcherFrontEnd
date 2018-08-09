@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ElementData} from '../ElementData';
 import {ActivatedRoute, Router} from '@angular/router';
+import {DomainService} from '../../services/domain.service';
 
 @Component({
   selector: 'app-content',
@@ -18,6 +19,10 @@ import {ActivatedRoute, Router} from '@angular/router';
       <ul *ngFor="let item of searchedItems">
         <li>{{item}}</li>
       </ul>
+
+      <div *ngIf="showSuccActivatedAccount" class="alert alert-success">
+        <strong>Success!</strong> Activation  successful.
+      </div>
       
       <div class="row">
         <div *ngFor="let box of boxes | paginate: { itemsPerPage: 12, currentPage: p }" class="col-lg-4 container-comp">
@@ -33,11 +38,12 @@ import {ActivatedRoute, Router} from '@angular/router';
       </div>
     </div>
   `,
-  styleUrls: ['content.component.css']
+  styleUrls: ['content.component.css'],
+  providers: [DomainService]
 })
 export class ContentComponent implements OnInit{
 
-  constructor(private router: Router, private activeRouter: ActivatedRoute) {
+  constructor(private router: Router, private activeRouter: ActivatedRoute, private domainService: DomainService) {
   }
 
   boxes: Array<ElementData> = [];
@@ -46,6 +52,7 @@ export class ContentComponent implements OnInit{
   userInfo: string;
   searchedItems: Array<string> = [];
   allItems: Array<string> = [];
+  showSuccActivatedAccount: boolean = false;
 
   navigateToElementInfo(id: number) {
     this.router.navigate(['content/'+id]);
@@ -61,6 +68,7 @@ export class ContentComponent implements OnInit{
 
   ngOnInit(): void {
     this.paramId = this.activeRouter.snapshot.queryParams['elementId'];
+    this.showSuccActivatedAccount = this.activeRouter.snapshot.queryParams['sucusessConfirmAccount'];
     console.log('Selected id is: ' + this.paramId);
 
     for (let i = 0; i < 24; i++) {
@@ -74,6 +82,12 @@ export class ContentComponent implements OnInit{
     this.allItems.push('B');
     this.allItems.push('BB');
     this.allItems.push('BBB');
+
+    if (this.showSuccActivatedAccount) {
+      setTimeout(args => {
+        this.showSuccActivatedAccount = false;
+      }, 3000);
+    }
   }
 
   filterBoxes(value: number) {

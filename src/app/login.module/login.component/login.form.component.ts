@@ -23,15 +23,15 @@ import {LoginData} from '../LoginData';
           <div>
             <input type="text" formControlName="login"
                    [ngStyle]="{ 'border-bottom': profileForm.get('login').invalid && profileForm.get('login').touched ? 'red solid'
-                  : profileForm.get('login').valid && profileForm.get('login').touched ? 'green solid' : 'aqua solid'}" class="login-input"/>
+                  : profileForm.get('login').valid && profileForm.get('login').touched ? 'green solid' : 'aqua solid'}" class="form-control forma-sign-in "/>
           </div>
         </label>
         <label>
           Password:
-          <div>
+          <div class="">
             <input type="password" formControlName="password"
                    [ngStyle]="{ 'border-bottom': profileForm.get('password').invalid && profileForm.get('password').touched ? 'red solid'
-                  : profileForm.get('password').valid && profileForm.get('password').touched ? 'green solid' : 'aqua solid'}" class="login-input"/>
+                  : profileForm.get('password').valid && profileForm.get('password').touched ? 'green solid' : 'aqua solid'}" class="form-control forma-sign-in "/>
           </div>
         </label>
         <button class="btn btn-outline-success btn-block " type="submit" [disabled]="!profileForm.valid">Submit</button>

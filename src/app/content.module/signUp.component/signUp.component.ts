@@ -22,6 +22,15 @@ import {EmailsLoginResponse} from '../../services/EmailsLoginResponse';
                   : signUpForm.get('firstName').valid && signUpForm.get('firstName').touched ? 'green solid' : 'aqua solid'}"/>
             </div>
           </div>
+          <div *ngIf="signUpForm.get('firstName').invalid && signUpForm.get('firstName').touched">
+            <i class="glyphicon glyphicon-remove" style="color: red"></i>
+            <p style="color: red">
+              Cannot be empty!!!
+            </p>
+          </div>
+          <div *ngIf="signUpForm.get('firstName').valid && signUpForm.get('firstName').touched">
+            <i class="glyphicon glyphicon-ok" style="color: green"></i>
+          </div>
         </div>
 
         <div class="form-group">
@@ -32,6 +41,15 @@ import {EmailsLoginResponse} from '../../services/EmailsLoginResponse';
                      [ngStyle]="{ 'border-bottom': signUpForm.get('lastName').invalid && signUpForm.get('lastName').touched ? 'red solid'
                   : signUpForm.get('lastName').valid && signUpForm.get('lastName').touched ? 'green solid' : 'aqua solid'}"/>
             </div>
+          </div>
+          <div *ngIf="signUpForm.get('lastName').invalid && signUpForm.get('lastName').touched">
+            <i class="glyphicon glyphicon-remove" style="color: red"></i>
+            <p style="color: red">
+              Cannot be empty!!!
+            </p>
+          </div>
+          <div *ngIf="signUpForm.get('lastName').valid && signUpForm.get('lastName').touched">
+            <i class="glyphicon glyphicon-ok" style="color: green"></i>
           </div>
         </div>
 
@@ -50,11 +68,19 @@ import {EmailsLoginResponse} from '../../services/EmailsLoginResponse';
           <label for="email" class="cols-sm-2 control-label">Your Email</label>
           <div class="cols-sm-10">
             <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
               <input type="text" class="form-control" name="email" id="email" placeholder="Enter your Email" formControlName="email"
                      [ngStyle]="{ 'border-bottom': signUpForm.get('email').invalid && signUpForm.get('email').touched ? 'red solid'
                   : signUpForm.get('email').valid && signUpForm.get('email').touched ? 'green solid' : 'aqua solid'}"/>
             </div>
+          </div>
+          <div *ngIf="signUpForm.get('email').invalid && signUpForm.get('email').touched">
+            <i class="glyphicon glyphicon-remove" style="color: red"></i>
+            <p style="color: red">
+              Email empty or already use!!!
+            </p>
+          </div>
+          <div *ngIf="signUpForm.get('email').valid && signUpForm.get('email').touched">
+            <i class="glyphicon glyphicon-ok" style="color: green"></i>
           </div>
         </div>
 
@@ -65,11 +91,19 @@ import {EmailsLoginResponse} from '../../services/EmailsLoginResponse';
           <label for="username" class="cols-sm-2 control-label">Login</label>
           <div class="cols-sm-10">
             <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
               <input type="text" class="form-control" name="username" id="username" placeholder="Enter your login" formControlName="login"
                      [ngStyle]="{ 'border-bottom': signUpForm.get('login').invalid && signUpForm.get('login').touched ? 'red solid'
                   : signUpForm.get('login').valid && signUpForm.get('login').touched ? 'green solid' : 'aqua solid'}"/>
             </div>
+          </div>
+          <div *ngIf="signUpForm.get('login').invalid && signUpForm.get('login').touched">
+            <i class="glyphicon glyphicon-remove" style="color: red"></i>
+            <p style="color: red">
+              Login empty or already use!!!
+            </p>
+          </div>
+          <div *ngIf="signUpForm.get('login').valid && signUpForm.get('login').touched">
+            <i class="glyphicon glyphicon-ok" style="color: green"></i>
           </div>
         </div>
 
@@ -77,12 +111,20 @@ import {EmailsLoginResponse} from '../../services/EmailsLoginResponse';
           <label for="password" class="cols-sm-2 control-label">Password</label>
           <div class="cols-sm-10">
             <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
               <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password"
                      formControlName="password"
                      [ngStyle]="{ 'border-bottom': signUpForm.get('password').invalid && signUpForm.get('password').touched ? 'red solid'
                   : signUpForm.get('password').valid && signUpForm.get('password').touched ? 'green solid' : 'aqua solid'}"/>
             </div>
+          </div>
+          <div *ngIf="signUpForm.get('password').invalid && signUpForm.get('password').touched">
+            <i class="glyphicon glyphicon-remove" style="color: red"></i>
+            <p style="color: red">
+              Password less then 6 symbols!!!
+            </p>
+          </div>
+          <div *ngIf="signUpForm.get('password').valid && signUpForm.get('password').touched">
+            <i class="glyphicon glyphicon-ok" style="color: green"></i>
           </div>
         </div>
 
@@ -90,12 +132,20 @@ import {EmailsLoginResponse} from '../../services/EmailsLoginResponse';
           <label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
           <div class="cols-sm-10">
             <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
               <input type="password" class="form-control" name="confirm" placeholder="Confirm your Password"
                      formControlName="confirmPassword"
                      [ngStyle]="{ 'border-bottom': signUpForm.get('confirmPassword').invalid && signUpForm.get('confirmPassword').touched ? 'red solid'
-                  : signUpForm.get('confirmPassword').valid && signUpForm.get('confirmPassword').touched ? 'green solid' : 'aqua solid'}"/>
+                  : signUpForm.get('confirmPassword').valid && signUpForm.get('confirmPassword').touched && signUpForm.get('password').valid  ? 'green solid' : 'aqua solid'}"/>
             </div>
+          </div>
+          <div *ngIf="signUpForm.get('confirmPassword').invalid && signUpForm.get('confirmPassword').touched">
+            <i class="glyphicon glyphicon-remove" style="color: red"></i>
+            <p style="color: red">
+              Passwords not equals or less then 6 symbols
+            </p>
+          </div>
+          <div *ngIf="signUpForm.get('confirmPassword').valid && signUpForm.get('confirmPassword').touched  && signUpForm.get('password').valid">
+            <i class="glyphicon glyphicon-ok" style="color: green"></i>
           </div>
         </div>
 
@@ -108,7 +158,6 @@ import {EmailsLoginResponse} from '../../services/EmailsLoginResponse';
           <label for="confirm" class="cols-sm-2 control-label">Country</label>
           <div class="cols-sm-10">
             <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
               <input type="password" class="form-control" name="confirm"  placeholder="Country"
                      formControlName="country"
                      [ngStyle]="{ 'border-bottom': signUpForm.get('country').invalid && signUpForm.get('country').touched ? 'red solid'
@@ -121,7 +170,6 @@ import {EmailsLoginResponse} from '../../services/EmailsLoginResponse';
           <label for="confirm" class="cols-sm-2 control-label">Address</label>
           <div class="cols-sm-10">
             <div class="input-group">
-              <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
               <input type="password" class="form-control" name="confirm"  placeholder="Address"
                      formControlName="address"
                      [ngStyle]="{ 'border-bottom': signUpForm.get('address').invalid && signUpForm.get('address').touched ? 'red solid'
@@ -162,8 +210,8 @@ export class SignUpComponent {
     lastName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email, this.emailUniqueValidator.bind(this)]],
     login: ['', [Validators.required, this.loginUniqueValidator.bind(this)]],
-    password: ['', Validators.required],
-    confirmPassword: ['', [Validators.required, this.passwordEqualsValidator]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['', [Validators.required, this.passwordEqualsValidator, Validators.minLength(6)]],
     gender: ['', Validators.required],
     agree: [false, [Validators.required, Validators.requiredTrue]],
     dateOfBirth: ['', [Validators.required]],

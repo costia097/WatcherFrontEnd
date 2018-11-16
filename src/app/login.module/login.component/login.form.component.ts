@@ -58,11 +58,15 @@ export class LoginFormComponent {
 
   onSubmit() {
     this.showAnyAlert = false;
-    let authHeader = 'Basic ' + btoa( this.profileForm.get('login').value + ':' + this.profileForm.get('password').value);
+    let login = this.profileForm.get('login').value;
+    let password = this.profileForm.get('password').value;
+
     this.showSpinner = true;
-    this.http.post<LoginData>('http://localhost:9090/login', null, {
-      responseType: 'json',
-      headers: {'Authorization': authHeader}
+    this.http.post<LoginData>('http://localhost:9090/login', {
+      login: login,
+      password: password
+    }, {
+      responseType: 'json'
     }).pipe().subscribe(value => {
       this.showAnyAlert = true;
       this.showSpinner = false;

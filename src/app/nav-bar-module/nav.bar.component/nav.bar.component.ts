@@ -96,7 +96,6 @@ fix preloader
      </div>
    </div>
    
-   <p hideAll>BALBLANLA</p>
    </body>
   `,
   styleUrls: ['nav.bar.component.css']

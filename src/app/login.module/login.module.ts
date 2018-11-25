@@ -17,6 +17,7 @@ import {PreloaderComponent} from './preloader.component/preloader.component';
   exports: [
     LoginFormComponent,
     PreloaderComponent
+
   ]
 })
 export class LoginModule {
